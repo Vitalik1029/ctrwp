@@ -1,10 +1,29 @@
 import React from "react";
 
-const Form = ({ newUser, onInputChange, onSubmit }) => {
+const Form = ({ newUser, onInputChange, onSubmit, isEditing, onCancelEdit }) => {
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    
+    if (newUser.firstName.trim() === '' || newUser.lastName.trim() === '' || newUser.email.trim() === '') {
+      alert('Пожалуйста, заполните все поля');
+      return;
+    }
+
+    if (isEditing) {
+      
+      onSubmit(e);
+    } else {
+      
+      if (window.confirm('Вы уверены, что хотите добавить нового пользователя?')) {
+        onSubmit(e);
+      }
+    }
+  };
+
   return (
     <section className="add-user-section">
-      <h2>Add New User</h2>
-      <form onSubmit={onSubmit} className="user-form">
+      <h2>{isEditing ? 'Edit User' : 'Add New User'}</h2>
+      <form onSubmit={handleFormSubmit} className="user-form">
         <div className="form-group">
           <label htmlFor="firstName">First Name:</label>
           <input
@@ -44,7 +63,20 @@ const Form = ({ newUser, onInputChange, onSubmit }) => {
           />
         </div>
         
-        <button type="submit" className="add-btn">Add User</button>
+        <div className="form-buttons">
+          <button type="submit" className="add-btn">
+            {isEditing ? 'Update User' : 'Add User'}
+          </button>
+          {isEditing && (
+            <button 
+              type="button" 
+              className="cancel-btn"
+              onClick={onCancelEdit}
+            >
+              Cancel
+            </button>
+          )}
+        </div>
       </form>
     </section>
   );

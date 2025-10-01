@@ -1,6 +1,14 @@
 import React from "react";
 
-const Table = ({ users, onDelete }) => {
+const Table = ({ users, onDelete, onEdit }) => {
+  const handleEditClick = (user) => {
+    onEdit(user);
+  };
+
+  const handleDeleteClick = (id, user) => {
+    onDelete(id, user);
+  };
+
   return (
     <table className="users-table">
       <thead>
@@ -21,12 +29,20 @@ const Table = ({ users, onDelete }) => {
               <td>{user.lastName}</td>
               <td>{user.email}</td>
               <td>
-                <button 
-                  className="delete-btn"
-                  onClick={() => onDelete(user.id)}
-                >
-                  Delete
-                </button>
+                <div className="action-buttons">
+                  <button 
+                    className="edit-btn"
+                    onClick={() => handleEditClick(user)}
+                  >
+                    Edit
+                  </button>
+                  <button 
+                    className="delete-btn"
+                    onClick={() => handleDeleteClick(user.id, user)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </td>
             </tr>
           );
