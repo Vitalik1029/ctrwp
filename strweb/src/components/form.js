@@ -1,8 +1,13 @@
 import React from "react";
 
-const Form = ({ newUser, onInputChange, onSubmit, isEditing, onCancelEdit }) => {
+const Form = ({ newUser, onInputChange, onSubmit, isEditing, onCancelEdit, userRole }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    
+    if (userRole !== 'admin') {
+      alert('You do not have permission to perform this action');
+      return;
+    }
     
     if (newUser.firstName.trim() === '' || newUser.lastName.trim() === '' || newUser.email.trim() === '') {
       alert('Пожалуйста, заполните все поля');
@@ -10,15 +15,17 @@ const Form = ({ newUser, onInputChange, onSubmit, isEditing, onCancelEdit }) => 
     }
 
     if (isEditing) {
-      
       onSubmit(e);
     } else {
-      
       if (window.confirm('Вы уверены, что хотите добавить нового пользователя?')) {
         onSubmit(e);
       }
     }
   };
+
+  if (userRole !== 'admin') {
+    return null;
+  }
 
   return (
     <section className="add-user-section">
