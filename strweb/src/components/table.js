@@ -15,61 +15,63 @@ const Table = ({ users, onDelete, onEdit, onView, showViewButton = false, userRo
   };
 
   return (
-    <table className="users-table">
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>FirstName</th>
-          <th>LastName</th>
-          <th>Email</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {users.map((user) => {
-          return (
-            <tr key={user.id}>
-              <td>{user.id}</td>
-              <td>
-                <Link to={`/user/${user.id}`} className="user-link">
-                  {user.firstName}
-                </Link>
-              </td>
-              <td>{user.lastName}</td>
-              <td>{user.email}</td>
-              <td>
-                <div className="action-buttons">
-                  {userRole === 'admin' && (
-                    <button 
-                      className="edit-btn"
-                      onClick={() => handleEditClick(user)}
-                    >
-                      Edit
-                    </button>
-                  )}
-                  {userRole === 'admin' && (
-                    <button 
-                      className="delete-btn"
-                      onClick={() => handleDeleteClick(user.id, user)}
-                    >
-                      Delete
-                    </button>
-                  )}
-                  {showViewButton && (
-                    <Link 
-                      to={`/user/${user.id}`} 
-                      className="view-btn"
-                    >
-                      View
-                    </Link>
-                  )}
-                </div>
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <div className="table-container">
+      <table className="users-table">
+        <thead>
+          <tr>
+            <th>id</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {users.map((user) => {
+            return (
+              <tr key={user.id}>
+                <td>{user.id}</td>
+                <td>
+                  <Link to={`/user/${user.id}`} className="user-link">
+                    {user.firstName}
+                  </Link>
+                </td>
+                <td>{user.lastName}</td>
+                <td>{user.email}</td>
+                <td>
+                  <div className="action-buttons">
+                    {userRole === 'admin' && (
+                      <button 
+                        className="edit-btn"
+                        onClick={() => handleEditClick(user)}
+                      >
+                        Edit
+                      </button>
+                    )}
+                    {userRole === 'admin' && (
+                      <button 
+                        className="delete-btn"
+                        onClick={() => handleDeleteClick(user.id, user)}
+                      >
+                        Delete
+                      </button>
+                    )}
+                    {showViewButton && (
+                      <Link 
+                        to={`/user/${user.id}`} 
+                        className="view-btn"
+                      >
+                        View
+                      </Link>
+                    )}
+                  </div>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
